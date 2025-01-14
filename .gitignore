@@ -1,4 +1,4 @@
-# R and RStudio files to ignore
+# R and RStudio files 2 ignore
 .Rhistory
 .RData
 .Rproj.user
