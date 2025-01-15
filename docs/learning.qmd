@@ -131,3 +131,5 @@ ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
 @fig-blodglukose_og_BMI
 
 ## Pushing changes to remote
+
+## Pulling changes locally 
