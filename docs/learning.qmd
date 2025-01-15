@@ -55,3 +55,27 @@ Again again
 ## Test 2
 
 Will it work know?
+
+```{r ggplot}
+ggplot(post_meal_data, aes(x = BMI)) +
+  geom_histogram()
+```
+
+```{r}
+#| fig-cap: "BMI results"
+#| label: fig-BMI_histo
+ggplot(post_meal_data, aes(x = BMI)) +
+  geom_histogram()
+```
+
+@fig-BMI_histo
+
+## Exercise Discrete Plots
+
+```{r}
+#| fig-cap: Jabadabado
+#| label: fig-jabadabado
+ggplot(post_meal_data, aes(x = glykemi)) + 
+  geom_bar()
+```
+See @fig-jabadabado for a cool plot
