@@ -36,6 +36,14 @@ post_meal_data <- read_csv2(
 )
 
 small_post_meal_data <- select(post_meal_data, id, Age, BMI, Group, auc_pg, auc_ins, glykemi)
+
+tidier_post_meal_data <- small_post_meal_data |>
+  rename(
+    AUC_glucose = auc_pg,
+    AUC_insulin = auc_ins
+  ) |>
+  filter(glykemi == 0) |>
+  select(-glykemi)
 ```
 
 ## Showing the data
@@ -80,6 +88,7 @@ ggplot(post_meal_data, aes(x = BMI)) +
 ggplot(post_meal_data, aes(x = glykemi)) +
   geom_bar()
 ```
+
 See @fig-jabadabado for a cool plot
 
 ```{r}
@@ -130,13 +139,15 @@ ggplot(post_meal_data, aes(x = BMI, y = auc_pg)) +
   geom_point() +
   geom_smooth()
 ```
+
 @fig-blodglukose_og_BMI
 
 ## Pushing changes to remote
 
-## Pulling changes locally 
+## Pulling changes locally
 
 ## Selecting data
+
 ```{r}
 select(post_meal_data, Age)
 
@@ -152,6 +163,7 @@ select(post_meal_data, contains("0"))
 ```
 
 ## Renaming specific columns
+
 ```{r}
 small_post_meal_data |>
   rename(AUC_glucose = auc_pg)
@@ -175,6 +187,7 @@ post_meal_data |>
     P.Glucose.5.OGTT = P.Glucose..5.OGTT
   )
 
+
 # Task 3.
 basic_info <- select(post_meal_data, id, BMI, Length, Weight, Age)
 rename(basic_info, Height = Length)
@@ -182,4 +195,50 @@ rename(basic_info, Height = Length)
 post_meal_data |>
   select(id, BMI, Length, Weight, Age) |>
   rename(Height = Length)
+```
+
+## Filtering data by row
+
+```{r}
+small_post_meal_data |>
+  filter(glykemi == 1)
+
+small_post_meal_data |>
+  filter(BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR")
+```
+
+## Modify or column
+
+```{r}
+tidier_post_meal_data |>
+  mutate(
+    insuline_glucose_ratio = AUC_insulin / AUC_glucose,
+    Group = if_else(Group == "CTR", "Control", "First-degree relative")
+  )
+```
+
+```{r}
+small_post_meal_data |>
+  filter(Group == "CTR", BMI >= 25)
+
+small_post_meal_data |>
+  filter(Group == "CTR" | BMI >= 25)
+```
+
+## Practice filter and mutate
+
+```{r}
+# Task 1.
+post_meal_data |>
+  filter(BMI >= 20 & BMI <= 40 & Group == "FDR")
+
+# Task 2.
+post_meal_data |>
+  mutate(
+    percent_body_fat = (Fat.mass.DXA / Weight) * 100
+  ) |>
+  filter(percent_body_fat > 30)
 ```
